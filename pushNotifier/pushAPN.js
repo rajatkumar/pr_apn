@@ -62,8 +62,13 @@ module.exports = {
         feedback = new apn.Feedback(feedBackOptions);
         feedback.on("feedback", function(devices) {
             devices.forEach(function(item) {
-                //TODO Do something with item.device and item.time;
+                //Do something with item.device and item.time;
                 console.log('Feedback:', item);
+                var deviceToken = item.device.token.toString("hex");
+                var time = item.time;
+                db.pushDeviceDB.deleteDeviceFromList(deviceToken, function(err,data){
+                    console.log(err,data);
+                })
             });
         });
     },

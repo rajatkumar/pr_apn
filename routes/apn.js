@@ -72,6 +72,28 @@ router.post('/multi', function(req, res, next) {
 
 });
 
+router.post('/deleteDeviceToken', function(req, res, next) {
+    console.log(req.body);
+    var token = req.body.token;
+    if(token){
+        db.pushDeviceDB.deleteDeviceFromList(token, function(err, status){
+            if(err){
+                res.send('Error while deleting'+ err);
+            }
+            else{
+                if (status)
+                    res.send('Deleted Successfully!');
+                else
+                    res.send('No such device found.');
+            }
+        })
+    }
+    else{
+        res.send('Nothing to Delete');
+    }
+
+});
+
 router.post('/find', function(req, res, next) {
     console.log(req.body);
     var tag = req.body.tag;
